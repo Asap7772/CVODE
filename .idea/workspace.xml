@@ -31,20 +31,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="096e9d42-a2e1-4c3e-b228-6ca8c7195928" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fblin.o" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jacobian.o" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spline.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spline.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jacobian.c" beforeDir="false" afterPath="$PROJECT_DIR$/jacobian.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Spline.c" beforeDir="false" afterPath="$PROJECT_DIR$/spline.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fblin.c" beforeDir="false" afterPath="$PROJECT_DIR$/fblin.c" afterDir="false" />
-    </list>
+    <list default="true" id="096e9d42-a2e1-4c3e-b228-6ca8c7195928" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +96,7 @@
       <workItem from="1564745352885" duration="220000" />
       <workItem from="1564754475830" duration="11184000" />
       <workItem from="1564778380772" duration="213000" />
-      <workItem from="1565012822470" duration="5646000" />
+      <workItem from="1565012822470" duration="5961000" />
     </task>
     <servers />
   </component>

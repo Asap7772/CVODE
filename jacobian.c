@@ -90,14 +90,14 @@ void jacobian_lsode_kernelC_(int *neq_pointer, double *phi_pointer, double *q, i
         yparam = (phi_temp - phiaxis[j - 1]) * hyi;
         zparam = (z_temp - zaxis[k - 1]) * hzi;
         r8herm3fcn(ict, 1, 1, fval, i, j, k, xparam, yparam, zparam, hx, hxi, hy, hyi, hz, hzi, BR4D, nr, nphi, nz);
-//        //dBR/dR
+//        //dBR/dR F had (1,1) transposed for C
         pd[0] = fval[1];
-//        //dBR/dZ
-        pd[1] = fval[3];
+//        //dBR/dZ F had (1,2) transposed for C
+        pd[2] = fval[3];
         r8herm3fcn(ict, 1, 1, fval, i, j, k, xparam, yparam, zparam, hx, hxi, hy, hyi, hz, hzi, BZ4D, nr, nphi, nz);
-//        //dBZ/dR
-        pd[2] = fval[1];
-//        //dBZ/dZ
+//        //dBZ/dR F had (2,1) transposed for C
+        pd[1] = fval[1];
+//        //dBZ/dZ F had (2,2) transposed for C
         pd[3] = fval[3];
     }
 }
