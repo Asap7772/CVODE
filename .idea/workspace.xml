@@ -31,7 +31,20 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="096e9d42-a2e1-4c3e-b228-6ca8c7195928" name="Default Changelist" comment="" />
+    <list default="true" id="096e9d42-a2e1-4c3e-b228-6ca8c7195928" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fblin.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jacobian.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spline.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spline.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Jacobian.c" beforeDir="false" afterPath="$PROJECT_DIR$/jacobian.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spline.c" beforeDir="false" afterPath="$PROJECT_DIR$/spline.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fblin.c" beforeDir="false" afterPath="$PROJECT_DIR$/fblin.c" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,12 +54,21 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="eOfAhvdc" />
   </component>
   <component name="ProjectId" id="1OpkxY6P8nUvSnsdHCMqO7NQgav" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -85,11 +107,29 @@
       <workItem from="1564671385693" duration="4046000" />
       <workItem from="1564682176748" duration="6188000" />
       <workItem from="1564745352885" duration="220000" />
-      <workItem from="1564754475830" duration="10713000" />
+      <workItem from="1564754475830" duration="11184000" />
+      <workItem from="1564778380772" duration="213000" />
+      <workItem from="1565012822470" duration="5646000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>
