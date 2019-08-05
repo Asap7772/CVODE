@@ -14,10 +14,10 @@ double min(double one, double two) {
 }
 
 void rhside_lsode_kernel_(double *phi_pointer, double *q, double *qdot, double *rmin_pointer, double *rmax_pointer,
-                         double *phimin_pointer, double *phimax_pointer, double *zmin_pointer, double *zmax_pointer,
-                         int *nr_pointer, int *nphi_pointer, int *nz_pointer, double *eps1_pointer,
-                         double *eps2_pointer, double *eps3_pointer, double *raxis, double *phiaxis,
-                         double *zaxis, double *BR4D, double *BZ4D, double *delta_phi_pointer) {
+                          double *phimin_pointer, double *phimax_pointer, double *zmin_pointer, double *zmax_pointer,
+                          int *nr_pointer, int *nphi_pointer, int *nz_pointer, double *eps1_pointer,
+                          double *eps2_pointer, double *eps3_pointer, double *raxis, double *phiaxis,
+                          double *zaxis, double *BR4D, double *BZ4D, double *delta_phi_pointer) {
     double phi = *phi_pointer;
     double rmin = *rmin_pointer;
     double rmax = *rmax_pointer;
@@ -37,8 +37,8 @@ void rhside_lsode_kernel_(double *phi_pointer, double *q, double *qdot, double *
     const int ivec = 1; //loop of one implemented in case
     int ier;
     double r_temp, phi_temp, z_temp, br_temp, bz_temp, hy, hz, hyi, hzi, one = 1;
-    double fval[1], xparam, yparam, zparam,  hx, hxi;
-    int  i, j, k;
+    double fval[1], xparam, yparam, zparam, hx, hxi;
+    int i, j, k;
     int ict[8] = {1, 1, 1, 1, 0, 0, 0, 0};
 
     ier = 0;

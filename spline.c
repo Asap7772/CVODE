@@ -15,9 +15,9 @@
 //s1,s2,s3,s4 is size of i, j, k, l respetively
 static double transposeLookup4D(double *arr, int i, int j, int k, int l, int s1, int s2, int s3, int s4) {
     //j, k, l are one based
-    j = j-1;
-    k = k-1;
-    l=l-1;
+    j = j - 1;
+    k = k - 1;
+    l = l - 1;
     return arr[l * s3 * s2 * s1 + k * s2 * s1 + j * s1 + i];
 }
 
@@ -29,7 +29,7 @@ r8herm3fcn(int *ict, int ivec, int ivecd, double *fval, int i, int j, int k, dou
            int nz) {
 
     int iadr;
-    double  xpi, xp2, xpi2, ax, axbar, bx, bxbar, ypi, yp2, ypi2, ay;
+    double xpi, xp2, xpi2, ax, axbar, bx, bxbar, ypi, yp2, ypi2, ay;
     double aybar, by, bybar, zpi, zp2, zpi2, az, azbar, bz, bzbar, axp;
     double axbarp, bxp, bxbarp, ayp, aybarp, byp, bybarp, azp, azbarp, bzp;
     double bzbarp;
