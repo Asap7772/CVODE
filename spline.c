@@ -14,6 +14,10 @@
 //arr[i][j][k][l] to arr[l][k][j][i]
 //s1,s2,s3,s4 is size of i, j, k, l respetively
 static double transposeLookup4D(double *arr, int i, int j, int k, int l, int s1, int s2, int s3, int s4) {
+    //j, k, l are one based
+    j = j-1;
+    k = k-1;
+    l=l-1;
     return arr[l * s3 * s2 * s1 + k * s2 * s1 + j * s1 + i];
 }
 

@@ -31,7 +31,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="096e9d42-a2e1-4c3e-b228-6ca8c7195928" name="Default Changelist" comment="" />
+    <list default="true" id="096e9d42-a2e1-4c3e-b228-6ca8c7195928" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spline.c" beforeDir="false" afterPath="$PROJECT_DIR$/spline.c" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +99,7 @@
       <workItem from="1564745352885" duration="220000" />
       <workItem from="1564754475830" duration="11184000" />
       <workItem from="1564778380772" duration="213000" />
-      <workItem from="1565012822470" duration="5961000" />
+      <workItem from="1565012822470" duration="8095000" />
     </task>
     <servers />
   </component>
