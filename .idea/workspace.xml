@@ -32,8 +32,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="096e9d42-a2e1-4c3e-b228-6ca8c7195928" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/ObjectList" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cvAdvDiff_kry_cuda.cu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cvAdvDiff_kry_cuda_managed.cu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cvodeTest.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fblin.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jacobian.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spline.c" beforeDir="false" afterPath="$PROJECT_DIR$/spline.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fblin.c" beforeDir="false" afterPath="$PROJECT_DIR$/fblin.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jacobian.c" beforeDir="false" afterPath="$PROJECT_DIR$/jacobian.c" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,6 +59,7 @@
   <component name="MacroExpansionManager">
     <option name="directoryName" value="eOfAhvdc" />
   </component>
+  <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectId" id="1OpkxY6P8nUvSnsdHCMqO7NQgav" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -65,7 +75,12 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="language.cpp.clangd" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -99,7 +114,10 @@
       <workItem from="1564745352885" duration="220000" />
       <workItem from="1564754475830" duration="11184000" />
       <workItem from="1564778380772" duration="213000" />
-      <workItem from="1565012822470" duration="8095000" />
+      <workItem from="1565012822470" duration="9182000" />
+      <workItem from="1565101050629" duration="38000" />
+      <workItem from="1565101112451" duration="13900000" />
+      <workItem from="1565121851175" duration="3116000" />
     </task>
     <servers />
   </component>
