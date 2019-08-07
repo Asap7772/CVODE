@@ -15,8 +15,8 @@ struct _UserData {
 };
 
 typedef struct _UserData *UserData;
-typedef double realtype;
-typedef double *N_Vector;
+//typedef double realtype;
+//typedef double *N_Vector;
 
 /* Problem setup and initialization functions */
 static UserData SetUserData(int neq, double rmin, double rmax, double phimin, double phimax, double zmin, double zmax,
@@ -92,8 +92,8 @@ static int jtv(N_Vector v, N_Vector Jv, realtype t, N_Vector u, N_Vector fu, voi
     double pd[nrpd];
 
     jacobian_lsode_kernelC(data->neq,t, u_data, pd, nrpd, data->rmin, data->rmax, data->phimin, data->phimax, data->zmin,
-            data->zmax, data->nr, data->nphi,data->nz, data->eps1,data->eps2, data->eps3, data->raxis, data->phiaxis,
-            data->zaxis, data->BR4D, data->BZ4D, data -> delta_phi);
+                           data->zmax, data->nr, data->nphi,data->nz, data->eps1,data->eps2, data->eps3, data->raxis, data->phiaxis,
+                           data->zaxis, data->BR4D, data->BZ4D, data -> delta_phi);
 
     // 2 x 2 matrix times 2 x 1 vector
     out_data[0] = pd[0] * v[0] + pd[2] * v[1];
@@ -132,10 +132,25 @@ void evaluateCvode_(int *neq_pointer, double *u, double *t_pointer, double *tout
     double eps2 = *eps2_pointer;
     double eps3 = *eps3_pointer;
     double delta_phi = *delta_phi_pointer;
-//    N_Vector uvec;
 
-    UserData data = SetUserData(neq, rmin, rmax, phimin, phimax, zmin, zmax, nr, nphi, nz,
-                                eps1, eps2, eps3, raxis, phiaxis, zaxis, BR4D, BZ4D, delta_phi);
+    N_Vector uvec;
+    int iout, retval;
+    void *cvode_mem;
+    SUNLinearSolver LS;
+    UserData data;
 
+    data = SetUserData(neq, rmin, rmax, phimin, phimax, zmin, zmax, nr, nphi, nz, eps1, eps2, eps3, raxis, phiaxis, zaxis, BR4D, BZ4D, delta_phi);
 
+    uvec = N_VMake_Serial(data->NEQ, u);
+    cvode_mem = CVodeCreate(CV_BDF);
+    retval = CVodeInit(cvode_mem, f, t, u);
+    retval = CVodeSStolerances(cvode_mem, reltol, abstol);
+    retval = CVodeSetUserData(cvode_mem, data);
+    LS = SUNLinSol_SPGMR(u, PREC_NONE, 0);
+    retval = CVodeSetLinearSolver(cvode_mem, LS, NULL);
+    retval = CVodeSetJacTimes(cvode_mem, NULL, jtv);
+
+    retval = CVode(cvode_mem, tout, u, &t, CV_NORMAL);
+//    retval = CVodeGetNumSteps(cvode_mem, &nst);
+    free(data)
 }
