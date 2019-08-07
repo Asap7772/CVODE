@@ -38,3 +38,8 @@
 *.ptx
 *.cubin
 *.fatbin
+
+# cmake
+CMakeLists.txt
+cmake-build-debug/
+.idea/
