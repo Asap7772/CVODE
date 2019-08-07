@@ -7,7 +7,6 @@
 #include "sundials_nvector.h"
 #include "sundials_types.h"
 #include "nvector_serial.h"
-#include "nvector_cuda.h"
 #include "cvode.h"
 #include "sunlinsol_spgmr.h"
 #include <stdlib.h>
@@ -58,15 +57,11 @@ static int f(realtype t, N_Vector u, N_Vector udot, void *user_data) {
     UserData data = (UserData) user_data;
     //NVECTOR SYNTAX
     //  NON-CUDA
-    //    double *u_data = u->data;
-    //    double *udot_data = udot->data;
+    double *u_data = u->data;
+    double *udot_data = udot->data;
     //  CUDA
     //    double *u_data = N_VGetHostArrayPointer_Cuda(u);
     //    double *udot_data = N_VGetHostArrayPointer_Cuda(udot);
-
-    //alias for now
-    double *u_data = u;
-    double *udot_data = udot;
 
     rhside_lsode_kernel(t, u_data, udot_data, data->rmin, data->rmax, data->phimin, data->phimax, data->zmin,
                         data->zmax, data->nr, data->nphi, data->nz, data->eps1, data->eps2, data->eps3, data->raxis,
@@ -78,42 +73,31 @@ static int jtv(N_Vector v, N_Vector Jv, realtype t, N_Vector u, N_Vector fu, voi
     UserData data = (UserData) user_data;
     //NVECTOR SYNTAX
     //  NON-CUDA
-    //    double *u_data = u->data;
-    //    double *udot_data = fu->data;
-    //    double *vec_data = v->data;
-    //    double *out_data = Jv->data;
+    double *u_data = u->data;
+    double *udot_data = fu->data;
+    double *vec_data = v->data;
+    double *out_data = Jv->data;
     //  CUDA
     //    double *u_data = N_VGetHostArrayPointer_Cuda(u);
     //    double *udot_data = N_VGetHostArrayPointer_Cuda(fu);
     //    double *vec_data = N_VGetHostArrayPointer_Cuda(v);
     //    double *out_data = N_VGetHostArrayPointer_Cuda(Jv);
 
-    //alias for now
-    double *u_data = u;
-    double *udot_data = fu;
-    double *vec_data = v;
-    double *out_data = Jv;
-
     int nrpd = data->neq * data->neq;
     double pd[nrpd];
 
-    jacobian_lsode_kernelC(data->neq,t, u_data, pd, nrpd, data->rmin, data->rmax, data->phimin, data->phimax, data->zmin,
-                           data->zmax, data->nr, data->nphi,data->nz, data->eps1,data->eps2, data->eps3, data->raxis, data->phiaxis,
-                           data->zaxis, data->BR4D, data->BZ4D, data -> delta_phi);
+    jacobian_lsode_kernelC(data->neq, t, u_data, pd, nrpd, data->rmin, data->rmax, data->phimin, data->phimax,
+                           data->zmin, data->zmax, data->nr, data->nphi, data->nz, data->eps1, data->eps2, data->eps3,
+                           data->raxis, data->phiaxis, data->zaxis, data->BR4D, data->BZ4D, data->delta_phi);
 
     // 2 x 2 matrix times 2 x 1 vector
-    out_data[0] = pd[0] * v[0] + pd[2] * v[1];
-    out_data[0] = pd[1] * v[0] + pd[3] * v[1];
+    out_data[0] = pd[0] * vec_data[0] + pd[2] * vec_data[1];
+    out_data[0] = pd[1] * vec_data[0] + pd[3] * vec_data[1];
     return 0;
 }
 
-//void jacobian_lsode_kernelC(int neq, double phi, double *q, double *pd, int nrpd, double rmin, double rmax, double phimin, double phimax,
-//                            double zmin, double zmax, int nr, int nphi, int nz, double eps1, double eps2, double eps3,
-//                            double *raxis, double *phiaxis, double *zaxis, double *BR4D, double *BZ4D,
-//                            double delta_phi);
-
 //method to call from fortran
-void evaluateCvode_(int *neq_pointer, double *u, double *t_pointer, double *tout_pointer, double *reltol_pointer,
+void evaluateCvode_(int *neq_pointer, double *uval, double *t_pointer, double *tout_pointer, double *reltol_pointer,
                     double *abstol_pointer, double *rmin_pointer, double *rmax_pointer, double *phimin_pointer,
                     double *phimax_pointer, double *zmin_pointer, double *zmax_pointer, int *nr_pointer,
                     int *nphi_pointer, int *nz_pointer, double *eps1_pointer, double *eps2_pointer,
@@ -139,15 +123,16 @@ void evaluateCvode_(int *neq_pointer, double *u, double *t_pointer, double *tout
     double eps3 = *eps3_pointer;
     double delta_phi = *delta_phi_pointer;
 
-    N_Vector uvec;
+    N_Vector u;
     int iout, retval;
     void *cvode_mem;
     SUNLinearSolver LS;
     UserData data;
 
-    data = SetUserData(neq, rmin, rmax, phimin, phimax, zmin, zmax, nr, nphi, nz, eps1, eps2, eps3, raxis, phiaxis, zaxis, BR4D, BZ4D, delta_phi);
+    data = SetUserData(neq, rmin, rmax, phimin, phimax, zmin, zmax, nr, nphi, nz, eps1, eps2, eps3, raxis, phiaxis,
+                       zaxis, BR4D, BZ4D, delta_phi);
 
-    uvec = N_VMake_Serial(data->NEQ, u);
+    u = N_VMake_Serial(data->neq, uval);
     cvode_mem = CVodeCreate(CV_BDF);
     retval = CVodeInit(cvode_mem, f, t, u);
     retval = CVodeSStolerances(cvode_mem, reltol, abstol);
