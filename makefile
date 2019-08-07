@@ -13,7 +13,9 @@ INCLUDES = -I$(CVODE_INCS)/cvode \
 	-I$(CVODE_INCS)/sundials \
 	-I$(CVODE_INCS)/sunlinsol \
 	-I$(CVODE_INCS)/sunmatrix \
-	-I$(CVODE_INCS)/sunnonlinsol
+	-I$(CVODE_INCS)/sunnonlinsol \
+	-I$(CVODE_INCS)
+
 LIBRARIES = -L$(CVODE_LIBS) -lsundials_cvode -lsundials_nveccuda -lsundials_nvecserial -lsundials_sunlinsolband -lsundials_sunlinsoldense \
 	-lsundials_sunlinsolpcg -lsundials_sunlinsolspbcgs -lsundials_sunlinsolspfgmr -lsundials_sunlinsolspgmr \
 	-lsundials_sunlinsolsptfqmr -lsundials_sunmatrixband -lsundials_sunmatrixdense -lsundials_sunmatrixsparse \
@@ -39,5 +41,5 @@ spline.o : spline.c
 	gcc $(CFLAGS)  -o $@ -c $< $(INCLUDES)
 
 clean:
-	rm *.o
+	rm *.o *.so
 

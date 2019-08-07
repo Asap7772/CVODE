@@ -4,6 +4,12 @@
 //
 #include "fblin.h"
 #include "jacobian.h"
+#include "sundials_nvector.h"
+#include "sundials_types.h"
+#include "nvector_serial.h"
+#include "nvector_cuda.h"
+#include "cvode.h"
+#include "sunlinsol_spgmr.h"
 #include <stdlib.h>
 
 struct _UserData {
