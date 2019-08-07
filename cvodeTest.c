@@ -9,10 +9,9 @@
 #include "nvector_serial.h"
 #include "cvode.h"
 #include "sunlinsol_spgmr.h"
-#include <stdlib.h>
-#include <cuda_runtime.h>
-#include <nvector/nvector_cuda.h>
+//#include <nvector/nvector_cuda.h>
 #include <sundials/sundials_math.h>
+#include <stdlib.h>
 #include <math.h>
 
 struct _UserData {
