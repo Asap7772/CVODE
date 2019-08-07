@@ -10,6 +10,10 @@
 #include "cvode.h"
 #include "sunlinsol_spgmr.h"
 #include <stdlib.h>
+#include <cuda_runtime.h>
+#include <nvector/nvector_cuda.h>
+#include <sundials/sundials_math.h>
+#include <math.h>
 
 struct _UserData {
     //constants
@@ -57,8 +61,8 @@ static int f(realtype t, N_Vector u, N_Vector udot, void *user_data) {
     UserData data = (UserData) user_data;
     //NVECTOR SYNTAX
     //  NON-CUDA
-    double *u_data = u->data;
-    double *udot_data = udot->data;
+    double *u_data = NV_DATA_S(u);
+    double *udot_data = NV_DATA_S(udot);
     //  CUDA
     //    double *u_data = N_VGetHostArrayPointer_Cuda(u);
     //    double *udot_data = N_VGetHostArrayPointer_Cuda(udot);
@@ -73,10 +77,10 @@ static int jtv(N_Vector v, N_Vector Jv, realtype t, N_Vector u, N_Vector fu, voi
     UserData data = (UserData) user_data;
     //NVECTOR SYNTAX
     //  NON-CUDA
-    double *u_data = u->data;
-    double *udot_data = fu->data;
-    double *vec_data = v->data;
-    double *out_data = Jv->data;
+    double *u_data = NV_DATA_S(u);
+    double *udot_data = NV_DATA_S(fu);
+    double *vec_data = NV_DATA_S(v);
+    double *out_data = NV_DATA_S(Jv);
     //  CUDA
     //    double *u_data = N_VGetHostArrayPointer_Cuda(u);
     //    double *udot_data = N_VGetHostArrayPointer_Cuda(fu);
@@ -143,5 +147,5 @@ void evaluateCvode_(int *neq_pointer, double *uval, double *t_pointer, double *t
 
     retval = CVode(cvode_mem, tout, u, &t, CV_NORMAL);
 //    retval = CVodeGetNumSteps(cvode_mem, &nst);
-    free(data)
+    free(data);
 }
