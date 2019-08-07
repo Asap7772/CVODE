@@ -1,4 +1,0 @@
-ObjectFiles = \
-spline.o \
-jacobian.o \
-fblin.o

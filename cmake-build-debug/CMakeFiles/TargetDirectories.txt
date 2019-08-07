@@ -1,2 +1,0 @@
-/Users/anikaitsingh/CLionProjects/CVODE_Functions/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/anikaitsingh/CLionProjects/CVODE_Functions/cmake-build-debug/CMakeFiles/edit_cache.dir
