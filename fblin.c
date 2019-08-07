@@ -5,13 +5,13 @@
 // Created by Anikait Singh on 2019-08-01.
 //
 
-double max(double one, double two) {
-    return one > two ? one : two;
-}
+/* double max(double one, double two) { */
+/*     return one > two ? one : two; */
+/* } */
 
-double min(double one, double two) {
-    return one > two ? two : one;
-}
+/* double min(double one, double two) { */
+/*     return one > two ? two : one; */
+/* } */
 
 void rhside_lsode_kernel_(double *phi_pointer, double *q, double *qdot, double *rmin_pointer, double *rmax_pointer,
                           double *phimin_pointer, double *phimax_pointer, double *zmin_pointer, double *zmax_pointer,
@@ -61,7 +61,7 @@ void rhside_lsode_kernel_(double *phi_pointer, double *q, double *qdot, double *
                 count++;
             }
         }
-        i = min(max(count, 1), nr - 1);
+        i = fmin(fmax(count, 1), nr - 1);
 
         count = 0;
         for (int i = 0; i < nphi; i++) {
@@ -69,7 +69,7 @@ void rhside_lsode_kernel_(double *phi_pointer, double *q, double *qdot, double *
                 count++;
             }
         }
-        j = min(max(count, 1), nphi - 1);
+        j = fmin(fmax(count, 1), nphi - 1);
 
         count = 0;
         for (int i = 0; i < nz; i++) {
@@ -77,7 +77,7 @@ void rhside_lsode_kernel_(double *phi_pointer, double *q, double *qdot, double *
                 count++;
             }
         }
-        k = min(max(count, 1), nz - 1);
+        k = fmin(fmax(count, 1), nz - 1);
         hx = raxis[i] - raxis[i - 1];
         hy = phiaxis[j] - phiaxis[j - 1];
         hz = zaxis[k] - zaxis[k - 1];
@@ -130,7 +130,7 @@ void rhside_lsode_kernel(double phi, double *q, double *qdot, double rmin, doubl
                 count++;
             }
         }
-        i = min(max(count, 1), nr - 1);
+        i = fmin(fmax(count, 1), nr - 1);
 
         count = 0;
         for (int i = 0; i < nphi; i++) {
@@ -138,7 +138,7 @@ void rhside_lsode_kernel(double phi, double *q, double *qdot, double rmin, doubl
                 count++;
             }
         }
-        j = min(max(count, 1), nphi - 1);
+        j = fmin(fmax(count, 1), nphi - 1);
 
         count = 0;
         for (int i = 0; i < nz; i++) {
@@ -146,7 +146,7 @@ void rhside_lsode_kernel(double phi, double *q, double *qdot, double rmin, doubl
                 count++;
             }
         }
-        k = min(max(count, 1), nz - 1);
+        k = fmin(fmax(count, 1), nz - 1);
         hx = raxis[i] - raxis[i - 1];
         hy = phiaxis[j] - phiaxis[j - 1];
         hz = zaxis[k] - zaxis[k - 1];
