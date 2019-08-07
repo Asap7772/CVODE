@@ -14,14 +14,15 @@ INCLUDES = -I$(CVODE_INCS)/cvode \
 	-I$(CVODE_INCS)/sunlinsol \
 	-I$(CVODE_INCS)/sunmatrix \
 	-I$(CVODE_INCS)/sunnonlinsol \
-	-I$(CVODE_INCS)
+	-I$(CVODE_INCS) \
+	-I/usr/local/cuda-9.1/targets/x86_64-linux/include
 
 LIBRARIES = -L$(CVODE_LIBS) -lsundials_cvode -lsundials_nveccuda -lsundials_nvecserial -lsundials_sunlinsolband -lsundials_sunlinsoldense \
 	-lsundials_sunlinsolpcg -lsundials_sunlinsolspbcgs -lsundials_sunlinsolspfgmr -lsundials_sunlinsolspgmr \
 	-lsundials_sunlinsolsptfqmr -lsundials_sunmatrixband -lsundials_sunmatrixdense -lsundials_sunmatrixsparse \
 	 -lsundials_sunnonlinsolfixedpoint -lsundials_sunnonlinsolnewton
 
-CFLAGS = -Wall -std=c99 -fpic
+CFLAGS = -Wall -std=c99 -Wno-unused-variable -Wno-unused-but-set-variable -fpic
 
 all :cvodeTest.o jacobian.o fblin.o spline.o cvodeTest.so
 

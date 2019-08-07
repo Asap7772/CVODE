@@ -9,10 +9,12 @@
 #include "nvector_serial.h"
 #include "cvode.h"
 #include "sunlinsol_spgmr.h"
+#include <cuda_runtime.h>
 #include <nvector/nvector_cuda.h>
 #include <sundials/sundials_math.h>
 #include <stdlib.h>
 #include <math.h>
+typedef cudaStream_t cudaStream_t;
 
 struct _UserData {
     //constants
@@ -72,7 +74,7 @@ static int f(realtype t, N_Vector u, N_Vector udot, void *user_data) {
     return 0;
 }
 
-static int jtv(N_Vector v, N_Vector Jv, realtype t, N_Vector u, N_Vector fu, void *user_data) {
+static int jtv(N_Vector v, N_Vector Jv, realtype t, N_Vector u, N_Vector fu, void *user_data, N_Vector temp) {
     UserData data = (UserData) user_data;
     //NVECTOR SYNTAX
     //  NON-CUDA
@@ -108,10 +110,10 @@ void evaluateCvode_(int *neq_pointer, double *uval, double *t_pointer, double *t
                     double *delta_phi_pointer) {
 
     int neq = *neq_pointer;
-    int t = *t_pointer;
-    int tout = *tout_pointer;
-    int reltol = *reltol_pointer;
-    int abstol = *abstol_pointer;
+    double t = *t_pointer;
+    double tout = *tout_pointer;
+    double reltol = *reltol_pointer;
+    double abstol = *abstol_pointer;
     double rmin = *rmin_pointer;
     double rmax = *rmax_pointer;
     double phimin = *phimin_pointer;
