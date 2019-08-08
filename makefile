@@ -1,3 +1,4 @@
+COMPILER = nvcc
 CVODE_ROOT= /u/asingh2/cvodeLib/instdir
 CVODE_LIBS = $(CVODE_ROOT)/lib64
 CVODE_INCS = $(CVODE_ROOT)/include
@@ -22,25 +23,28 @@ LIBRARIES = -L$(CVODE_LIBS) -lsundials_cvode -lsundials_nveccuda -lsundials_nvec
 	-lsundials_sunlinsolsptfqmr -lsundials_sunmatrixband -lsundials_sunmatrixdense -lsundials_sunmatrixsparse \
 	 -lsundials_sunnonlinsolfixedpoint -lsundials_sunnonlinsolnewton
 
-CFLAGS = -Wall -std=c99 -Wno-unused-variable -Wno-unused-but-set-variable -fpic
+CFLAGS = --compiler-options '-Wall -fPIC -Wno-unused-variable'
 
-all :cvodeTest.o jacobian.o fblin.o spline.o cvodeTest.so
 
-cvodeTest.so: cvodeTest.o jacobian.o fblin.o spline.o
-	gcc -shared -o $@ $^ $(LIBRARIES)
+
+all :cvodeTest.o jacobian.o fblin.o spline.o libcvodeTest.so
+
+libcvodeTest.so: cvodeTest.o jacobian.o fblin.o spline.o
+	$(COMPILER) -shared -o $@ $^ $(LIBRARIES)
 
 cvodeTest.o : cvodeTest.c jacobian.h fblin.h
-	gcc $(CFLAGS) -o $@ -c $< $(INCLUDES)
+	$(COMPILER) $(CFLAGS) -o $@ -c $< $(INCLUDES)
 
 jacobian.o : jacobian.c spline.h
-	gcc $(CFLAGS) -o $@ -c $< $(INCLUDES)
+	$(COMPILER) $(CFLAGS) -o $@ -c $< $(INCLUDES)
 
 fblin.o : fblin.c spline.h
-	gcc $(CFLAGS) -o $@ -c $< $(INCLUDES)
+	$(COMPILER) $(CFLAGS) -o $@ -c $< $(INCLUDES)
 
 spline.o : spline.c
-	gcc $(CFLAGS)  -o $@ -c $< $(INCLUDES)
+	$(COMPILER) $(CFLAGS)  -o $@ -c $< $(INCLUDES)
 
 clean:
 	rm *.o *.so
+
 

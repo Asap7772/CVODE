@@ -14,7 +14,7 @@
 #include <sundials/sundials_math.h>
 #include <stdlib.h>
 #include <math.h>
-typedef cudaStream_t cudaStream_t;
+// typedef cudaStream_t cudaStream_t;
 
 struct _UserData {
     //constants
