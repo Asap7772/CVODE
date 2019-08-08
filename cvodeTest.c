@@ -147,6 +147,10 @@ void evaluateCvode_(int *neq_pointer, double *uval, double *t_pointer, double *t
     retval = CVodeSetJacTimes(cvode_mem, NULL, jtv);
 
     retval = CVode(cvode_mem, tout, u, &t, CV_NORMAL);
+    double* data = NV_DATA_S(u);
+    for(int i = 0; i<neq; i++){
+        uvec[i] = u[i];
+    }
 //    retval = CVodeGetNumSteps(cvode_mem, &nst);
     free(data);
 }
