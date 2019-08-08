@@ -102,7 +102,7 @@ static int jtv(N_Vector v, N_Vector Jv, realtype t, N_Vector u, N_Vector fu, voi
 }
 
 //method to call from fortran
-void evaluateCvode_(int *neq_pointer, double *uval, double *t_pointer, double *tout_pointer, double *reltol_pointer,
+void evaluatecvode_(int *neq_pointer, double *uval, double *t_pointer, double *tout_pointer, double *reltol_pointer,
                     double *abstol_pointer, double *rmin_pointer, double *rmax_pointer, double *phimin_pointer,
                     double *phimax_pointer, double *zmin_pointer, double *zmax_pointer, int *nr_pointer,
                     int *nphi_pointer, int *nz_pointer, double *eps1_pointer, double *eps2_pointer,
@@ -134,6 +134,8 @@ void evaluateCvode_(int *neq_pointer, double *uval, double *t_pointer, double *t
     SUNLinearSolver LS;
     UserData data;
 
+    printf("%f %f\n", t, tout);
+
     data = SetUserData(neq, rmin, rmax, phimin, phimax, zmin, zmax, nr, nphi, nz, eps1, eps2, eps3, raxis, phiaxis,
                        zaxis, BR4D, BZ4D, delta_phi);
 
@@ -147,9 +149,9 @@ void evaluateCvode_(int *neq_pointer, double *uval, double *t_pointer, double *t
     retval = CVodeSetJacTimes(cvode_mem, NULL, jtv);
 
     retval = CVode(cvode_mem, tout, u, &t, CV_NORMAL);
-    double* data = NV_DATA_S(u);
+    double* x = NV_DATA_S(u);
     for(int i = 0; i<neq; i++){
-        uvec[i] = u[i];
+        uval[i] = x[i];
     }
 //    retval = CVodeGetNumSteps(cvode_mem, &nst);
     free(data);

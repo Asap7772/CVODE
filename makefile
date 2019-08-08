@@ -23,7 +23,7 @@ LIBRARIES = -L$(CVODE_LIBS) -lsundials_cvode -lsundials_nveccuda -lsundials_nvec
 	-lsundials_sunlinsolsptfqmr -lsundials_sunmatrixband -lsundials_sunmatrixdense -lsundials_sunmatrixsparse \
 	 -lsundials_sunnonlinsolfixedpoint -lsundials_sunnonlinsolnewton
 
-CFLAGS = --compiler-options '-Wall -fPIC -Wno-unused-variable'
+CFLAGS = -g --compiler-options '-g  -Wall -fPIC -Wno-unused-variable'
 
 
 
