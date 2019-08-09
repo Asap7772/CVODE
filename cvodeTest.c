@@ -16,6 +16,15 @@
 #include <math.h>
 // typedef cudaStream_t cudaStream_t;
 
+#define HANDLE_ERROR(ans) { gpuAssert((ans), __FILE__, __LINE__); }
+
+inline void gpuAssert(cudaError_t code, const char *file, int line, bool abort = true) {
+    if (code != cudaSuccess) {
+        fprintf(stderr, "GPUassert: %s %s %d\n", cudaGetErrorString(code), file, line);
+        if (abort) exit(code);
+    }
+}
+
 struct _UserData {
     //constants
     int neq, nr, nphi, nz;
@@ -62,11 +71,11 @@ static int f(realtype t, N_Vector u, N_Vector udot, void *user_data) {
     UserData data = (UserData) user_data;
     //NVECTOR SYNTAX
     //  NON-CUDA
-    double *u_data = NV_DATA_S(u);
-    double *udot_data = NV_DATA_S(udot);
+//    double *u_data = NV_DATA_S(u);
+//    double *udot_data = NV_DATA_S(udot);
     //  CUDA
-    //    double *u_data = N_VGetHostArrayPointer_Cuda(u);
-    //    double *udot_data = N_VGetHostArrayPointer_Cuda(udot);
+    double *u_data = N_VGetDeviceArrayPointer_Cuda(u);
+    double *udot_data = N_VGetDeviceArrayPointer_Cuda(udot);
 
     rhside_lsode_kernel(t, u_data, udot_data, data->rmin, data->rmax, data->phimin, data->phimax, data->zmin,
                         data->zmax, data->nr, data->nphi, data->nz, data->eps1, data->eps2, data->eps3, data->raxis,
@@ -78,15 +87,15 @@ static int jtv(N_Vector v, N_Vector Jv, realtype t, N_Vector u, N_Vector fu, voi
     UserData data = (UserData) user_data;
     //NVECTOR SYNTAX
     //  NON-CUDA
-    double *u_data = NV_DATA_S(u);
-    double *udot_data = NV_DATA_S(fu);
-    double *vec_data = NV_DATA_S(v);
-    double *out_data = NV_DATA_S(Jv);
+//    double *u_data = NV_DATA_S(u);
+//    double *udot_data = NV_DATA_S(fu);
+//    double *vec_data = NV_DATA_S(v);
+//    double *out_data = NV_DATA_S(Jv);
     //  CUDA
-    //    double *u_data = N_VGetHostArrayPointer_Cuda(u);
-    //    double *udot_data = N_VGetHostArrayPointer_Cuda(fu);
-    //    double *vec_data = N_VGetHostArrayPointer_Cuda(v);
-    //    double *out_data = N_VGetHostArrayPointer_Cuda(Jv);
+    double *u_data = N_VGetDeviceArrayPointer_Cuda(u);
+    double *udot_data = N_VGetDeviceArrayPointer_Cuda(fu);
+    double *vec_data = N_VGetDeviceArrayPointer_Cuda(v);
+    double *out_data = N_VGetDeviceArrayPointer_Cuda(Jv);
 
     int nrpd = data->neq * data->neq;
     double pd[nrpd];
@@ -139,7 +148,12 @@ void evaluatecvode_(int *neq_pointer, double *uval, double *t_pointer, double *t
     data = SetUserData(neq, rmin, rmax, phimin, phimax, zmin, zmax, nr, nphi, nz, eps1, eps2, eps3, raxis, phiaxis,
                        zaxis, BR4D, BZ4D, delta_phi);
 
-    u = N_VMake_Serial(data->neq, uval);
+//    u = N_VMake_Serial(data->neq, uval);
+    double *u_d;
+    HANDLE_ERROR(cudaMalloc(&u_d, (size_t)(neq * sizeof(double))));
+    u = N_VMAKE_CUDA(neq, uval, u_d);
+    HANDLE_ERROR(cudaMemcpy(u_d, uval, (size_t)(neq * sizeof(double)), cudaMemcpyHosttoDevice));
+
     cvode_mem = CVodeCreate(CV_BDF);
     retval = CVodeInit(cvode_mem, f, t, u);
     retval = CVodeSStolerances(cvode_mem, reltol, abstol);
@@ -149,11 +163,13 @@ void evaluatecvode_(int *neq_pointer, double *uval, double *t_pointer, double *t
     retval = CVodeSetJacTimes(cvode_mem, NULL, jtv);
 
     //retval = CVode(cvode_mem, tout, u, &t, CV_NORMAL);
-    retval = CVode(cvode_mem, t+delta_phi, u, &tout, CV_NORMAL);
-    double* x = NV_DATA_S(u);
-    for(int i = 0; i<neq; i++){
-        uval[i] = x[i];
-    }
+    retval = CVode(cvode_mem, t + delta_phi, u, &tout, CV_NORMAL);
+//    double* x = NV_DATA_S(u);
+    double *u_d = N_VGetDeviceArrayPointer_Cuda(u);
+    HANDLE_ERROR(cudaMemcpy(uval, u_d, (size_t)(neq * sizeof(double)), cudaMemcpyDevicetoHost));
+//    for(int i = 0; i<neq; i++){
+//        uval[i] = x[i];
+//    }
 //    retval = CVodeGetNumSteps(cvode_mem, &nst);
     free(data);
 }
