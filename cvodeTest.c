@@ -148,7 +148,8 @@ void evaluatecvode_(int *neq_pointer, double *uval, double *t_pointer, double *t
     retval = CVodeSetLinearSolver(cvode_mem, LS, NULL);
     retval = CVodeSetJacTimes(cvode_mem, NULL, jtv);
 
-    retval = CVode(cvode_mem, tout, u, &t, CV_NORMAL);
+    //retval = CVode(cvode_mem, tout, u, &t, CV_NORMAL);
+    retval = CVode(cvode_mem, t+delta_phi, u, &tout, CV_NORMAL);
     double* x = NV_DATA_S(u);
     for(int i = 0; i<neq; i++){
         uval[i] = x[i];
