@@ -106,7 +106,7 @@ static int jtv(N_Vector v, N_Vector Jv, realtype t, N_Vector u, N_Vector fu, voi
 //    double *vec_data = NV_DATA_S(v);
 //    double *out_data = NV_DATA_S(Jv);
     //  CUDA
-    double *u_data = N_VGetHostArrayPointer_Cuda(u);    
+    double *u_data = N_VGetHostArrayPointer_Cuda(u);
     double *u_data_d = N_VGetDeviceArrayPointer_Cuda(u);
     double *udot_data = N_VGetHostArrayPointer_Cuda(fu);
     double *vec_data = N_VGetHostArrayPointer_Cuda(v);
@@ -160,7 +160,7 @@ void evaluatecvode_(int *neq_pointer, double *uval, double *t_pointer, double *t
     SUNLinearSolver LS;
     UserData data;
 
-    
+
     //    ifaccess("a.dat" , F_OK ) == -1 ) {
     //FILE *fp = fopen("a.dat","w+");
     //fprintf(fp, "neq = %d;", neq);
@@ -212,10 +212,10 @@ double *raxis_d, *phiaxis_d, *zaxis_d, *BR4D_d, *BZ4D_d;
 
  retval = CVode(cvode_mem, tout, u, &t, CV_NORMAL);
  retval = CVode(cvode_mem, t + delta_phi, u, &tout, CV_NORMAL);
- double* x = NV_DATA_S(u);
+ //double* x = NV_DATA_S(u);
  u_d = N_VGetDeviceArrayPointer_Cuda(u);
  fprintf(stderr,"after cvode  uval %p u_d %p\n",uval, u_d);
- N_VCopyFromDevice_Cuda(u);
+ //N_VCopyFromDevice_Cuda(u);
  HANDLE_ERROR(cudaMemcpy(uval, u_d, (size_t)(neq * sizeof(double)), cudaMemcpyDeviceToHost));
  //    for(int i = 0; i<neq; i++){
  //        uval[i] = x[i];
