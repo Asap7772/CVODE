@@ -23,25 +23,23 @@ LIBRARIES = -L$(CVODE_LIBS) -lsundials_cvode -lsundials_nveccuda -lsundials_nvec
 	-lsundials_sunlinsolsptfqmr -lsundials_sunmatrixband -lsundials_sunmatrixdense -lsundials_sunmatrixsparse \
 	 -lsundials_sunnonlinsolfixedpoint -lsundials_sunnonlinsolnewton
 
-CFLAGS = -g --compiler-options '-g  -Wall -fPIC -Wno-unused-variable'
-
-
+CFLAGS = -g -G --compiler-options '-g -Wall -fPIC -Wno-unused-variable'
 
 all :cvodeTest.o jacobian.o fblin.o spline.o libcvodeTest.so
 
 libcvodeTest.so: cvodeTest.o jacobian.o fblin.o spline.o
 	$(COMPILER) -shared -o $@ $^ $(LIBRARIES)
 
-cvodeTest.o : cvodeTest.c jacobian.h fblin.h
+cvodeTest.o : cvodeTest.cu jacobian.h fblin.h
 	$(COMPILER) $(CFLAGS) -o $@ -c $< $(INCLUDES)
 
-jacobian.o : jacobian.c spline.h
+jacobian.o : jacobian.cu spline.h
 	$(COMPILER) $(CFLAGS) -o $@ -c $< $(INCLUDES)
 
-fblin.o : fblin.c spline.h
+fblin.o : fblin.cu spline.h
 	$(COMPILER) $(CFLAGS) -o $@ -c $< $(INCLUDES)
 
-spline.o : spline.c
+spline.o : spline.cu
 	$(COMPILER) $(CFLAGS)  -o $@ -c $< $(INCLUDES)
 
 clean:

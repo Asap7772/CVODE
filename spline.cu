@@ -13,7 +13,10 @@
 
 //arr[i][j][k][l] to arr[l][k][j][i]
 //s1,s2,s3,s4 is size of i, j, k, l respetively
-static double transposeLookup4D(double *arr, int i, int j, int k, int l, int s1, int s2, int s3, int s4) {
+#ifdef __NVCC__
+__device__
+#endif
+double transposeLookup4D(double *arr, int i, int j, int k, int l, int s1, int s2, int s3, int s4) {
     //j, k, l are one based
     j = j - 1;
     k = k - 1;
@@ -22,8 +25,10 @@ static double transposeLookup4D(double *arr, int i, int j, int k, int l, int s1,
 }
 
 //ivec = 1
-void
-r8herm3fcn(int *ict, int ivec, int ivecd, double *fval, int i, int j, int k, double xp,
+#ifdef __NVCC__
+__global__
+#endif
+void r8herm3fcn(int ivec, int ivecd, double *fval, int i, int j, int k, double xp,
            double yp, double zp, double hx, double hxi, double hy, double hyi,
            double hz, double hzi, double *fin, int inf2, int inf3,
            int nz) {
@@ -35,6 +40,7 @@ r8herm3fcn(int *ict, int ivec, int ivecd, double *fval, int i, int j, int k, dou
     double bzbarp;
 
     double sum = 0;
+    int ict[8] = {1,1,1,1,0,0,0,0};
 
     //x
     xpi = 1.0 - xp;

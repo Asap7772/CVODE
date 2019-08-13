@@ -13,6 +13,7 @@
 /*     return one > two ? two : one; */
 /* } */
 
+/*
 void jacobian_lsode_kernelC_(int *neq_pointer, double *phi_pointer, double *q, int *ml_pointer, int *mp_pointer,
                              double *pd, int *nrpd_pointer, double *rmin_pointer, double *rmax_pointer,
                              double *phimin_pointer, double *phimax_pointer, double *zmin_pointer, double *zmax_pointer,
@@ -101,17 +102,18 @@ void jacobian_lsode_kernelC_(int *neq_pointer, double *phi_pointer, double *q, i
         pd[3] = fval[3];
     }
 }
+*/
 
-void jacobian_lsode_kernelC(int neq, double phi, double *q, double *pd, int nrpd, double rmin, double rmax, double phimin, double phimax,
-                            double zmin, double zmax, int nr, int nphi, int nz, double eps1, double eps2, double eps3,
-                            double *raxis, double *phiaxis, double *zaxis, double *BR4D, double *BZ4D,
-                            double delta_phi) {
+void jacobian_lsode_kernelC(int neq, double phi, double *q,double *q_d, double *pd, int nrpd, double rmin, double rmax, double phimin, 
+     				double phimax, double zmin, double zmax, int nr, int nphi, int nz, double eps1, double eps2, double eps3,
+                            double *raxis, double *phiaxis,double *zaxis, double *BR4D, double *BZ4D,double *raxis_d,
+                          double *phiaxis_d, double *zaxis_d, double *BR4D_d, double *BZ4D_d, double delta_phi) {
 
     int ier, i, j, k;
     double r_temp, phi_temp, z_temp, xparam,
             yparam, zparam, hx, hy, hz, hxi, hyi, hzi, one = 1;
     double fval[4];
-    int ict[8] = {1, 1, 1, 1, 0, 0, 0, 0};
+    //int ict[8] = {1, 1, 1, 1, 0, 0, 0, 0};
 
     ier = 0;
     r_temp = q[0];
@@ -126,24 +128,24 @@ void jacobian_lsode_kernelC(int neq, double phi, double *q, double *pd, int nrpd
         (phi_temp >= phimin - eps2) && (phi_temp <= phimax + eps2) &&
         (z_temp >= zmin - eps3) && (z_temp <= zmax + eps3)) {
         int count = 0;
-        for (int i = 0; i < nr; i++) {
-            if (raxis[i] < r_temp) {
+        for (int ii = 0; ii < nr; ii++) {
+            if (raxis[ii] < r_temp) {
                 count++;
             }
         }
         i = fmin(fmax(count, 1), nr - 1);
 
         count = 0;
-        for (int i = 0; i < nphi; i++) {
-            if (phiaxis[i] < phi_temp) {
+        for (int ii = 0; ii < nphi; ii++) {
+            if (phiaxis[ii] < phi_temp) {
                 count++;
             }
         }
         j = fmin(fmax(count, 1), nphi - 1);
 
         count = 0;
-        for (int i = 0; i < nz; i++) {
-            if (zaxis[i] < z_temp) {
+        for (int ii = 0; ii < nz; ii++) {
+            if (zaxis[ii] < z_temp) {
                 count++;
             }
         }
@@ -157,15 +159,25 @@ void jacobian_lsode_kernelC(int neq, double phi, double *q, double *pd, int nrpd
         xparam = (r_temp - raxis[i - 1]) * hxi;
         yparam = (phi_temp - phiaxis[j - 1]) * hyi;
         zparam = (z_temp - zaxis[k - 1]) * hzi;
-        r8herm3fcn(ict, 1, 1, fval, i, j, k, xparam, yparam, zparam, hx, hxi, hy, hyi, hz, hzi, BR4D, nr, nphi, nz);
+	
+	double *fval_d;
+	cudaMalloc(&fval_d, sizeof(fval));
+	cudaMemcpy(fval_d, fval, sizeof(fval), cudaMemcpyHostToDevice);
+
+        r8herm3fcn<<<1,1>>>(1, 1, fval_d, i, j, k, xparam, yparam, zparam, hx, hxi, hy, hyi, hz, hzi, BR4D_d, nr, nphi, nz);
 //        //dBR/dR F had (1,1) transposed for C
+	cudaMemcpy(fval, fval_d, sizeof(fval), cudaMemcpyDeviceToHost);	
         pd[0] = fval[1];
 //        //dBR/dZ F had (1,2) transposed for C
         pd[2] = fval[3];
-        r8herm3fcn(ict, 1, 1, fval, i, j, k, xparam, yparam, zparam, hx, hxi, hy, hyi, hz, hzi, BZ4D, nr, nphi, nz);
+	
+
+        r8herm3fcn<<<1,1>>>(1, 1, fval_d, i, j, k, xparam, yparam, zparam, hx, hxi, hy, hyi, hz, hzi, BZ4D_d, nr, nphi, nz);
+	cudaMemcpy(fval, fval_d, sizeof(fval), cudaMemcpyDeviceToHost);	
 //        //dBZ/dR F had (2,1) transposed for C
         pd[1] = fval[1];
 //        //dBZ/dZ F had (2,2) transposed for C
         pd[3] = fval[3];
+	cudaFree(fval_d);
     }
 }
