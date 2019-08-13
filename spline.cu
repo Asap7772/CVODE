@@ -29,9 +29,9 @@ double transposeLookup4D(double *arr, int i, int j, int k, int l, int s1, int s2
 __global__
 #endif
 void r8herm3fcn(int ivec, int ivecd, double *fval, int i, int j, int k, double xp,
-           double yp, double zp, double hx, double hxi, double hy, double hyi,
-           double hz, double hzi, double *fin, int inf2, int inf3,
-           int nz) {
+                double yp, double zp, double hx, double hxi, double hy, double hyi,
+                double hz, double hzi, double *fin, int inf2, int inf3,
+                int nz) {
 
     int iadr;
     double xpi, xp2, xpi2, ax, axbar, bx, bxbar, ypi, yp2, ypi2, ay;
@@ -506,5 +506,4 @@ void r8herm3fcn(int ivec, int ivecd, double *fval, int i, int j, int k, double x
         );
         fval[iadr] = sum;
     }
-//    }
 }
