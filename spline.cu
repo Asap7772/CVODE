@@ -89,7 +89,7 @@ void r8herm3fcn(int ivec, int ivecd, double *fval, int i, int j, int k, double x
 
     int s1 = 8;
     if (ict[0] == 1) {
-        iadr = iadr + 1;
+        // iadr = iadr + 1;
         sum = azbar * (
                 axbar * (aybar * transposeLookup4D(fin, 0, i, j, k, s1, inf2, inf3, nz) +
                          ay * transposeLookup4D(fin, 0, i, j + 1, k, s1, inf2, inf3, nz)) +
@@ -508,4 +508,3 @@ void r8herm3fcn(int ivec, int ivecd, double *fval, int i, int j, int k, double x
     }
 //    }
 }
-
