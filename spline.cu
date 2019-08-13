@@ -95,7 +95,7 @@ void r8herm3fcn(int ivec, int ivecd, double *fval, int i, int j, int k, double x
                          ay * transposeLookup4D(fin, 0, i, j + 1, k, s1, inf2, inf3, nz)) +
                 ax * (aybar * transposeLookup4D(fin, 0, i + 1, j, k, s1, inf2, inf3, nz) +
                       ay * transposeLookup4D(fin, 0, i + 1, j + 1, k, s1, inf2, inf3, nz))) +
-              +az * (
+              az * (
                       axbar * (aybar * transposeLookup4D(fin, 0, i, j, k + 1, s1, inf2, inf3, nz) +
                                ay * transposeLookup4D(fin, 0, i, j + 1, k + 1, s1, inf2, inf3, nz)) +
                       ax * (aybar * transposeLookup4D(fin, 0, i + 1, j, k + 1, s1, inf2, inf3, nz) +
