@@ -1,3 +1,42 @@
+# Note this is the default cshrc file
+# to run other cshrc files have them source
+# this one first then do what they need to do.
+# Always envoke module purge and load the
+# ppplcluster module.
+# Load modules
+
+# USE GCC6
+module load autoconf/2.69 idl matlab valgrind git
+module load gcc/6.1.0
+module load gsl/1.16
+module load silo nag/fll6a24dfl pgplot szip/2.1 ntcc/gcc6.1.0
+module load acml/6.1.0/gfortran64
+module load hdf/4.2.12
+module load openmpi/3.0.0
+module load blacs fftw hdf5-parallel/1.10.1 scalapack
+module load petsc_complex/3.8.3
+module load slepc_complex/3.8.3
+module load curl/7.59.0 netcdf-c/4.4.1
+module load netcdf-fortran/4.4.4 netcdf-cxx4/4.3.0
+module load qt/4.8.3
+module load python/3.6.4
+module load git
+module load matlab
+module load java
+module load make
+module load cmake
+module load curl
+module load cuda
+setenv STELLOPT_PATH /u/asingh2/stellopt/
+#setenv GENE_PATH /u/slazerso/src/GENE/bin/obj_pppl_cluster
+#setenv TERPSICHORE_PATH /u/slazerso/src/TERPSICHORE_17
+#setenv COILOPT_PATH /u/slazerso/src/COILOPT++
+#setenv TRAVIS_PATH /u/slazerso/src/TRAVIS_2016
+#setenv TRAVIS_PATH /u/slazerso/src/TRAVIS_16.08.19/TRAVIS-src
+#setenv TRAVIS_PATH /u/slazerso/src/TRAVIS_2018/TRAVIS-src
+#setenv REGCOIL_PATH /u/slazerso/src/REGCOIL
+#setenv SFINCS_PATH /u/slazerso/src/SFINCS/fortran/version3/
+setenv ADASDIR /p/xshare/transp/adas/
 #export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/u/asingh2/cvodeLib/instdir/lib64
 setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/u/asingh2/cvodeLib/instdir/lib64
 setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/u/asingh2/cvodeTest
