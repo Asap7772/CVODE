@@ -1,5 +1,5 @@
 # CUDA ODE Solver
-This work was done for the STELLOPT package of PPPL created by Sam Lazerson under Dr. Stephane Ethier. The goals of the project were the following:
+This work was done for the STELLOPT package of PPPL created by Sam Lazerson under Dr. Stephane Ethier and Garret Wright. The goals of the project were the following:
 - Replacing the current LSODE solver with s CVODE solver which is compatible with CUDA
 - Accelerating the Jacobian and Right Hand Side functions for the solver by converting the spline interpolation function to a CUDA kernel
 
